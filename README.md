@@ -115,11 +115,11 @@ Evaluate the recalls for the search results.
 
 ```
 ../../scripts/evaluate.py news20/news20.scale_score news20/news20.scale_groundtruth
-Recall@1:		0.571
-Recall@2:		0.704
-Recall@5:		0.786
-Recall@10:		0.847
-Recall@20:		0.878
-Recall@50:		0.918
+Recall@1:	0.571
+Recall@2:	0.704
+Recall@5:	0.786
+Recall@10:	0.847
+Recall@20:	0.878
+Recall@50:	0.918
 Recall@100:	0.918
 ```
