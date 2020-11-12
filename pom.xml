@@ -1,0 +1,189 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>it.unipi.dii</groupId>
+  <artifactId>cws</artifactId>
+  <version>0.0.1</version>
+  <packaging>jar</packaging>
+
+  <name>Consistent Weighted Sampling</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+    <license.inceptionYear>2020</license.inceptionYear>
+    <license.organizationName>Nicola Tonellotto</license.organizationName>
+  </properties>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>tonellotto</id>
+      <email>nicola.tonellotto@gmail.com</email>
+      <name>Nicola Tonellotto</name>
+    </developer>
+  </developers>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math3</artifactId>
+      <version>3.6.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>it.unimi.dsi</groupId>
+      <artifactId>fastutil</artifactId>
+      <version>8.4.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>it.unimi.dsi</groupId>
+      <artifactId>dsiutils</artifactId>
+      <version>2.6.14</version>
+    </dependency>
+
+    <dependency>
+      <groupId>args4j</groupId>
+      <artifactId>args4j</artifactId>
+      <version>2.33</version>
+      <type>jar</type>
+      <scope>compile</scope>
+    </dependency>
+
+  </dependencies>
+
+    <build>
+      <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.6.0</version>
+            <configuration>
+                <source>${maven.compiler.target}</source>
+                <target>${maven.compiler.source}</target>
+                <encoding>${project.build.sourceEncoding}</encoding>
+            </configuration>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-eclipse-plugin</artifactId>
+            <version>2.10</version>
+            <configuration>
+                <downloadSources>true</downloadSources>
+                <downloadJavadocs>true</downloadJavadocs>
+            </configuration>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.0.1</version>
+            <executions>
+                <execution>
+                  <id>attach-sources</id>
+                  <goals>
+                      <goal>jar</goal>
+                  </goals>
+                </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.0.2</version>
+            <configuration>
+                <archive>
+                  <manifest>
+                      <addClasspath>true</addClasspath>
+                  </manifest>
+                </archive>
+            </configuration>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.0.0</version>
+            <configuration>
+                <descriptorRefs>
+                  <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+            </configuration>
+            <executions>
+                <execution>
+                  <id>make-assembly</id>
+                  <phase>package</phase>
+                  <goals>
+                      <goal>single</goal>
+                  </goals>
+                </execution>
+            </executions>
+          </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M1</version>
+          <configuration>
+              <forkCount>4</forkCount>
+              <reuseForks>true</reuseForks>
+              <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+          </configuration>
+        </plugin>
+
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>appassembler-maven-plugin</artifactId>
+            <version>1.10</version>
+            <configuration>
+                <assembleDirectory>${project.build.directory}</assembleDirectory>
+                <extraJvmArguments>-Xms1G -Xmx10G</extraJvmArguments>
+                <platforms>unix</platforms>
+                <projectArtifactFirstInClassPath>true</projectArtifactFirstInClassPath>
+                <programs>
+                  <program>
+                      <mainClass>it.unipi.dii.cws.Cws</mainClass>
+                      <id>cws-main</id>
+                  </program>
+
+                  <program>
+                      <mainClass>it.unipi.dii.cws.GroundTruth</mainClass>
+                      <id>ground-truth</id>
+                  </program>
+
+                  <program>
+                    <mainClass>it.unipi.dii.cws.AnnSearch</mainClass>
+                    <id>ann-search</id>
+                  </program>
+                </programs>
+            </configuration>
+        <executions>
+            <execution>
+                <id>assemble</id>
+                <goals>
+                    <goal>assemble</goal>
+                </goals>
+            </execution>
+        </executions>
+
+           </plugin>
+
+    </plugins>
+    </build>
+
+</project>
